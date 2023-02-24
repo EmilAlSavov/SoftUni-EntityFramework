@@ -1,0 +1,10 @@
+Package Manager Console
+---------------------------------------------
+---------------------------------------------
+INSTALL PACKAGES
+-------
+Install-Package Microsoft.EntityFrameworkCore.Tools –v 6.0.1 Install-Package Microsoft.EntityFrameworkCore.SqlServer –v 6.0.1 Install-Package Microsoft.EntityFrameworkCore.Design -v 6.0.
+
+BUILD DB
+--------
+Scaffold-DbContext 'Server=.;Database=SoftUni;Integrated Security=True;' Microsoft.EntityFrameworkCore.SqlServer -DataAnnotations -ContextDir Data -OutputDir Models
