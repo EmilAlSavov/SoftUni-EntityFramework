@@ -8,3 +8,7 @@ Install-Package Microsoft.EntityFrameworkCore.Tools –v 6.0.1 Install-Package M
 BUILD DB
 --------
 Scaffold-DbContext 'Server=.;Database=SoftUni;Integrated Security=True;' Microsoft.EntityFrameworkCore.SqlServer -DataAnnotations -ContextDir Data -OutputDir Models
+--------
+
+Connection String
+Server=.;Database=MinionsDB;Trusted_Connection=True;Integrated Security=true;Trust Server Certificate=true;
