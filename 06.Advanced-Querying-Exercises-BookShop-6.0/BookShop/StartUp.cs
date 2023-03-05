@@ -12,9 +12,9 @@
             using var db = new BookShopContext();
             //DbInitializer.ResetDatabase(db);
 
-            int year = int.Parse(Console.ReadLine());
+            string categories = Console.ReadLine().ToLower();
 
-            Console.WriteLine(GetBooksNotReleasedIn(db, year));
+            Console.WriteLine(GetBooksByCategory(db, categories));
         }
 
         public static string GetBooksByAgeRestriction(BookShopContext context, string command)
@@ -79,6 +79,28 @@
             {
                 result.AppendLine(b.Title);
             }
+
+            return result.ToString().Trim();
+        }
+
+        public static string GetBooksByCategory(BookShopContext context, string input)
+        {
+            StringBuilder result = new StringBuilder();
+
+            string[] categories = input.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+
+            var books = context.Books
+                .Include(b => b.BookCategories)
+                .ThenInclude(bc => bc.Category)
+                .Where(b => b.BookCategories.Any(bk => categories.Contains(bk.Category.Name.ToLower())))
+                .OrderBy(b => b.Title)
+                .ToList();
+
+            foreach (var b in books)
+            {
+                result.AppendLine(b.Title);
+            }
+
 
             return result.ToString().Trim();
         }
