@@ -14,7 +14,7 @@
 
             string input = Console.ReadLine().ToLower();
 
-            Console.WriteLine(GetBookTitlesContaining(db, input));
+            Console.WriteLine(GetBooksByAuthor(db, input));
         }
 
         public static string GetBooksByAgeRestriction(BookShopContext context, string command)
@@ -159,6 +159,23 @@
             foreach (var book in books)
             {
                 result.AppendLine(book.Title);
+            }
+
+            return result.ToString().Trim();
+        }
+
+        public static string GetBooksByAuthor(BookShopContext context, string input)
+        {
+            StringBuilder result = new StringBuilder();
+
+            var books = context.Books
+                .Include(b => b.Author)
+                .Where(b => b.Author.LastName.ToLower().StartsWith(input))
+                .OrderBy(b => b.BookId);
+
+            foreach (var b in books)
+            {
+                result.AppendLine($"{b.Title} ({b.Author.FirstName} {b.Author.LastName})");
             }
 
             return result.ToString().Trim();
