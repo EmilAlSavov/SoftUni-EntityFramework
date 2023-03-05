@@ -2,6 +2,7 @@
 {
     using Data;
     using Initializer;
+    using Microsoft.EntityFrameworkCore;
     using System.Text;
 
     public class StartUp
@@ -12,7 +13,7 @@
             //DbInitializer.ResetDatabase(db);
 
 
-            Console.WriteLine(GetGoldenBooks(db));
+            Console.WriteLine(GetBooksByPrice(db));
         }
 
         public static string GetBooksByAgeRestriction(BookShopContext context, string command)
@@ -45,6 +46,23 @@
             {
                 result.AppendLine(book.Title);
             }
+            return result.ToString().Trim();
+        }
+
+        public static string GetBooksByPrice(BookShopContext context)
+        {
+            StringBuilder result = new StringBuilder();
+
+            var books = context.Books
+                .Where(b => b.Price > 40)
+                .OrderByDescending(b => b.Price)
+                .AsNoTracking();
+
+            foreach (var b in books)
+            {
+                result.AppendLine($"{b.Title} - ${b.Price:f2}");
+            }
+
             return result.ToString().Trim();
         }
     }
