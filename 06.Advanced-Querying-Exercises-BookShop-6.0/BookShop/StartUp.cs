@@ -12,9 +12,9 @@
             using var db = new BookShopContext();
             //DbInitializer.ResetDatabase(db);
 
-            string ends = Console.ReadLine();
+            string input = Console.ReadLine().ToLower();
 
-            Console.WriteLine(GetAuthorNamesEndingIn(db, ends));
+            Console.WriteLine(GetBookTitlesContaining(db, input));
         }
 
         public static string GetBooksByAgeRestriction(BookShopContext context, string command)
@@ -143,6 +143,22 @@
             foreach (var author in authors)
             {
                 result.AppendLine(author.FirstName + ' ' + author.LastName);
+            }
+
+            return result.ToString().Trim();
+        }
+
+        public static string GetBookTitlesContaining(BookShopContext context, string input)
+        {
+            StringBuilder result = new StringBuilder();
+
+            var books = context.Books
+                .Where(b => b.Title.ToLower().Contains(input))
+                .OrderBy(b => b.Title);
+
+            foreach (var book in books)
+            {
+                result.AppendLine(book.Title);
             }
 
             return result.ToString().Trim();
