@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,11 @@ namespace ProductShop.DTOs.Export
 
         public decimal Price { get; set; }
 
-        public string Seller { get; set; }
+        [JsonIgnore]
+        public string? Seller { get; set; }
+
+        public string? BuyerFirstName { get; set; }
+
+        public string? BuyerLastName { get; set; }
     }
 }

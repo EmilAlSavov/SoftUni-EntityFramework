@@ -19,7 +19,7 @@ namespace ProductShop
             string categoryJson = File.ReadAllText(@"../../../Datasets/categories.json");
             ProductShopContext context = new ProductShopContext();
 
-            string result = ImportCategoryProducts(context, catProdJson);
+            string result = GetSoldProducts(context);
 
             Console.WriteLine(result);
         }
@@ -103,11 +103,11 @@ namespace ProductShop
 
             foreach (var catprodDto in categoryProductDtos)
             {
-                if (!context.Categories.Any(c => c.Id == catprodDto.CategoryId) ||
-                    !context.Products.Any(p => p.Id == catprodDto.ProductId))
-                {
-                    continue;
-                }
+                //if (!context.Categories.Any(c => c.Id == catprodDto.CategoryId) ||
+                //    !context.Products.Any(p => p.Id == catprodDto.ProductId))
+                //{
+                //    continue;
+                //}
                 categoryProducts.Add(new CategoryProduct()
                 {
                     CategoryId = catprodDto.CategoryId,
@@ -138,6 +138,36 @@ namespace ProductShop
                 });
 
             string Json = JsonConvert.SerializeObject(products, Formatting.Indented, new JsonSerializerSettings
+            {
+                ContractResolver = new CamelCasePropertyNamesContractResolver()
+            });
+
+            return Json;
+        }
+
+        //Ex. 6
+        public static string GetSoldProducts(ProductShopContext context)
+        {
+            var sellers = context.Users
+                .Where(u => u.ProductsSold.Count > 0)
+                .Include(u => u.ProductsSold)
+                .ThenInclude(p => p.Buyer)
+                .OrderBy(u => u.LastName)
+                .ThenBy(u => u.FirstName)
+                .Select(u => new UserSoldProductsDto()
+                {
+                    FirstName = u.FirstName,
+                    LastName = u.LastName,
+                    Products = u.ProductsSold.Select(p => new ProductExportDto()
+                    {
+                        Name = p.Name,
+                        Price = p.Price,
+                        BuyerFirstName = p.Buyer.FirstName,
+                        BuyerLastName = p.Buyer.LastName,
+                    }).ToList()
+                }).ToList();
+
+            string Json = JsonConvert.SerializeObject(sellers, Formatting.Indented, new JsonSerializerSettings
             {
                 ContractResolver = new CamelCasePropertyNamesContractResolver()
             });
