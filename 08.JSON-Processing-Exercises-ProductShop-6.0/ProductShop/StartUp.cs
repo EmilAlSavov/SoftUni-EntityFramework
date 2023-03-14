@@ -16,7 +16,7 @@ namespace ProductShop
             string categoryJson = File.ReadAllText(@"../../../Datasets/categories.json");
             ProductShopContext context = new ProductShopContext();
 
-            string result = ImportProducts(context, productJson);
+            string result = ImportCategories(context, categoryJson);
 
             Console.WriteLine(result);
         }
@@ -43,6 +43,7 @@ namespace ProductShop
             return $"Successfully imported {users.Count}";
         }
 
+        //Ex. 2
         public static string ImportProducts(ProductShopContext context, string inputJson)
         {
             List<ProductDto> productDtos = JsonConvert.DeserializeObject<List<ProductDto>>(inputJson);
@@ -64,6 +65,28 @@ namespace ProductShop
             context.SaveChanges();
 
             return $"Successfully imported {products.Count}";
+        }
+
+        public static string ImportCategories(ProductShopContext context, string inputJson)
+        {
+            List<CategoryDto> categoryDtos = JsonConvert.DeserializeObject<List<CategoryDto>>(inputJson);
+            List<Category> categories = new List<Category>();
+
+            foreach (var catDto in categoryDtos)
+            {
+                if(catDto.Name != null)
+                {
+                    categories.Add(new Category()
+                    {
+                        Name = catDto.Name,
+                    });
+                }
+            }
+
+            context.Categories.AddRange(categories);
+            context.SaveChanges();
+
+            return $"Successfully imported {categories.Count}";
         }
     }
 }
