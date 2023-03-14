@@ -16,10 +16,12 @@ namespace ProductShop
             string categoryJson = File.ReadAllText(@"../../../Datasets/categories.json");
             ProductShopContext context = new ProductShopContext();
 
-            string result = ImportCategories(context, categoryJson);
+            string result = ImportCategoryProducts(context, catProdJson);
 
             Console.WriteLine(result);
         }
+
+        //  IMPORT DATA 
 
         //Ex. 1
         public static string ImportUsers(ProductShopContext context, string inputJson)
@@ -67,6 +69,7 @@ namespace ProductShop
             return $"Successfully imported {products.Count}";
         }
 
+        //Ex. 3
         public static string ImportCategories(ProductShopContext context, string inputJson)
         {
             List<CategoryDto> categoryDtos = JsonConvert.DeserializeObject<List<CategoryDto>>(inputJson);
@@ -87,6 +90,32 @@ namespace ProductShop
             context.SaveChanges();
 
             return $"Successfully imported {categories.Count}";
+        }
+
+        //Ex. 4
+        public static string ImportCategoryProducts(ProductShopContext context, string inputJson)
+        {
+            List<CategoryProductDto> categoryProductDtos = JsonConvert.DeserializeObject<List<CategoryProductDto>>(inputJson);
+            List<CategoryProduct> categoryProducts = new List<CategoryProduct>();
+
+            foreach (var catprodDto in categoryProductDtos)
+            {
+                if (!context.Categories.Any(c => c.Id == catprodDto.CategoryId) ||
+                    !context.Products.Any(p => p.Id == catprodDto.ProductId))
+                {
+                    continue;
+                }
+                categoryProducts.Add(new CategoryProduct()
+                {
+                    CategoryId = catprodDto.CategoryId,
+                    ProductId = catprodDto.ProductId,
+                });
+            }
+
+            context.CategoriesProducts.AddRange(categoryProducts);
+            context.SaveChanges();
+
+            return $"Successfully imported {categoryProducts.Count}";
         }
     }
 }
