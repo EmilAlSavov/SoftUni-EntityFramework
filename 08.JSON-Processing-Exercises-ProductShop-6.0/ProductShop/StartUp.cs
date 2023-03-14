@@ -1,5 +1,8 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using ProductShop.Data;
+using ProductShop.DTOs.Export;
 using ProductShop.DTOs.Import;
 using ProductShop.Models;
 using System.Text.Json.Serialization;
@@ -116,6 +119,30 @@ namespace ProductShop
             context.SaveChanges();
 
             return $"Successfully imported {categoryProducts.Count}";
+        }
+
+        //  EXPORT DATA
+
+        //Ex. 5
+        public static string GetProductsInRange(ProductShopContext context)
+        {
+            var products = context.Products
+                .Where(p => p.Price >= 500 && p.Price <= 1000)
+                .OrderBy(p => p.Price)
+                .Include(p => p.Seller)
+                .Select(p => new ProductExportDto()
+                {
+                    Name = p.Name,
+                    Price = p.Price,
+                    Seller = p.Seller.FirstName + " " + p.Seller.LastName,
+                });
+
+            string Json = JsonConvert.SerializeObject(products, Formatting.Indented, new JsonSerializerSettings
+            {
+                ContractResolver = new CamelCasePropertyNamesContractResolver()
+            });
+
+            return Json;
         }
     }
 }
