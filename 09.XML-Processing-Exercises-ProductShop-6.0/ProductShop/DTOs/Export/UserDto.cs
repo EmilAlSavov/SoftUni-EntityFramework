@@ -6,13 +6,12 @@ using System.Threading.Tasks;
 
 namespace ProductShop.DTOs.Export
 {
-    public class UserSoldProductsDto
+    internal class UserDto
     {
-        
         public string FirstName { get; set; }
 
         public string LastName { get; set; }
 
-        public List<ProductExportDto> SoldProducts { get; set; }
+        public List<ProductDto> Products { get; set; }
     }
 }

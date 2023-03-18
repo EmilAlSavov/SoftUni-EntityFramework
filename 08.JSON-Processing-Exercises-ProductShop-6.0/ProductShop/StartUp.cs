@@ -149,23 +149,26 @@ namespace ProductShop
         public static string GetSoldProducts(ProductShopContext context)
         {
             var sellers = context.Users
-                .Where(u => u.ProductsSold.Count > 0)
-                .Include(u => u.ProductsSold)
-                .ThenInclude(p => p.Buyer)
+                .Where(u => u.ProductsSold.Any(p => p.Buyer != null))
                 .OrderBy(u => u.LastName)
                 .ThenBy(u => u.FirstName)
                 .Select(u => new UserSoldProductsDto()
                 {
                     FirstName = u.FirstName,
                     LastName = u.LastName,
-                    Products = u.ProductsSold.Select(p => new ProductExportDto()
+                    SoldProducts = u.ProductsSold
+                    .Where(p => p.Buyer != null)
+                    .Select(p => new ProductExportDto()
                     {
                         Name = p.Name,
                         Price = p.Price,
                         BuyerFirstName = p.Buyer.FirstName,
                         BuyerLastName = p.Buyer.LastName,
                     }).ToList()
-                }).ToList();
+                }).AsNoTracking()
+                .ToArray();
+
+            Console.WriteLine(sellers);
 
             string Json = JsonConvert.SerializeObject(sellers, Formatting.Indented, new JsonSerializerSettings
             {
