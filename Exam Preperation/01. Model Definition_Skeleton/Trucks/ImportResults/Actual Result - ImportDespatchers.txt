@@ -1,0 +1,39 @@
+Successfully imported despatcher – Genadi Petrov with 2 trucks.
+Successfully imported despatcher – Kosta Slavov with 8 trucks.
+Successfully imported despatcher – S with 6 trucks.
+Successfully imported despatcher – Viktor DragnevDragnevDragnevDragnevDragnevDragnevDragnevDragnevDragnevDragnev with 4 trucks.
+Successfully imported despatcher – Stefan Dragomirov with 1 trucks.
+Successfully imported despatcher – Veselin Daskalov with 2 trucks.
+Successfully imported despatcher – Stela Stefanova with 3 trucks.
+Successfully imported despatcher – Ana Ivanova with 1 trucks.
+Successfully imported despatcher – Marina Dimitrieva with 6 trucks.
+Successfully imported despatcher – Desislava Hristova with 1 trucks.
+Successfully imported despatcher – Kalina Petrova with 1 trucks.
+Successfully imported despatcher – Mariela HristovaHristovaHristovaHristovaHristovaHristovaHristovaHristova with 0 trucks.
+Successfully imported despatcher – Hristo Ivanov with 7 trucks.
+Successfully imported despatcher – Ivan Hristov with 5 trucks.
+Successfully imported despatcher – Petko Ivanov with 4 trucks.
+Successfully imported despatcher – Ivan Petrov with 1 trucks.
+Successfully imported despatcher – Borislav Petrov with 3 trucks.
+Successfully imported despatcher – Ivan Borislavov with 3 trucks.
+Successfully imported despatcher – Boris Todorov with 2 trucks.
+Successfully imported despatcher – Atanas Petrov with 8 trucks.
+Successfully imported despatcher – Georgi Stefanov with 2 trucks.
+Successfully imported despatcher – Vladimir Hristov with 8 trucks.
+Successfully imported despatcher – Dobromir Plamenov with 6 trucks.
+Successfully imported despatcher – Atanas Stoyanov with 7 trucks.
+Successfully imported despatcher – Miahela Eneva with 3 trucks.
+Successfully imported despatcher – Polina Kostadinova with 8 trucks.
+Successfully imported despatcher – Vladislav Dobromirov with 4 trucks.
+Successfully imported despatcher – Georgi Atanasov with 5 trucks.
+Successfully imported despatcher – Asen Hristov with 4 trucks.
+Successfully imported despatcher – Ivan Todorov with 1 trucks.
+Successfully imported despatcher – Todor Petrov with 6 trucks.
+Successfully imported despatcher – Petko Todorov with 1 trucks.
+Successfully imported despatcher – Ekaterina Hristova with 4 trucks.
+Successfully imported despatcher – Hristina Petrova with 7 trucks.
+Successfully imported despatcher – Apostol Dobromirov with 7 trucks.
+Successfully imported despatcher – Grigor Petrov with 4 trucks.
+Successfully imported despatcher – Simeon Ivanov with 6 trucks.
+Successfully imported despatcher – M with 5 trucks.
+Invalid Data!

@@ -20,7 +20,7 @@ namespace ProductShop
             string categoriesXml = File.ReadAllText("../../../Datasets/categories.xml");
             string categoriesProductsXml = File.ReadAllText("../../../Datasets/categories-products.xml");
 
-            string result = GetCategoriesByProductsCount(context);
+            string result = GetUsersWithProducts(context);
 
             Console.WriteLine(result);
         }
@@ -191,6 +191,7 @@ namespace ProductShop
             return doc.ToString();
         }
 
+        //Ex. 6
         public static string GetSoldProducts(ProductShopContext context)
         {
             var users = context.Users
@@ -249,6 +250,7 @@ namespace ProductShop
             return doc.ToString();
         }
 
+        //Ex. 7
         public static string GetCategoriesByProductsCount(ProductShopContext context)
         {
 
@@ -275,6 +277,44 @@ namespace ProductShop
 
                 serializer.Serialize(sw, categories, ns);
 
+                result = sw.ToString();
+            }
+
+            return result;
+        }
+
+        //Ex. 8
+        public static string GetUsersWithProducts(ProductShopContext context)
+        {
+
+            var users = context.Users
+                .Where(u => u.ProductsSold.Count > 0)
+                .OrderByDescending(u => u.ProductsSold.Count)
+                .Take(10)
+                .Select(u => new UserDto()
+                {
+                    FirstName = u.FirstName,
+                    LastName = u.LastName,
+                    Age = u.Age,
+                    Products = u.ProductsSold
+                                .OrderByDescending(ps => ps.Price)
+                                .Select(ps => new ProductDto
+                                {
+                                    Name = ps.Name,
+                                    Price = ps.Price,
+                                    BuyerFullName = "null"
+                                }).ToList()
+                }).ToList();
+
+            XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<UserDto>), new XmlRootAttribute("Users"));
+
+            string result = "";
+            using (StringWriter sw = new StringWriter())
+            {
+                XmlSerializerNamespaces ns = new XmlSerializerNamespaces();
+                ns.Add("", "");
+
+                xmlSerializer.Serialize(sw, users , ns);
                 result = sw.ToString();
             }
 
